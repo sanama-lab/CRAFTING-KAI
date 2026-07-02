@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Usuarios</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+    <div class="contenedor">
+        <div class="encabezado">
+            <h1>Lista de <span>Usuarios</span></h1>
+            <a href="index.php" class="btn-volver">← Volver al Inicio</a>
+        </div>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Completo</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="user-id">#001</td>
+                        <td class="user-nombre">Joaquín Maini</td>
+                        <td>joaquin@ejemplo.com</td>
+                        <td><span class="rol admin">Administrador</span></td>
+                        <td class="acciones">
+                            <button class="btn-accion btn-editar">Editar</button>
+                            <button class="btn-accion btn-eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="user-id">#002</td>
+                        <td class="user-nombre">Carlos Gómez</td>
+                        <td>carlos.gomez@ejemplo.com</td>
+                        <td><span class="rol cliente">Cliente</span></td>
+                        <td class="acciones">
+                            <button class="btn-accion btn-editar">Editar</button>
+                            <button class="btn-accion btn-eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="user-id">#003</td>
+                        <td class="user-nombre">Paola Rodríguez</td>
+                        <td>pao.rod@ejemplo.com</td>
+                        <td><span class="rol cliente">Cliente</span></td>
+                        <td class="acciones">
+                            <button class="btn-accion btn-editar">Editar</button>
+                            <button class="btn-accion btn-eliminar">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

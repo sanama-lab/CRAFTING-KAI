@@ -1,0 +1,170 @@
+:root {
+    --color-fondo: #121214;
+    --color-tarjeta: #1e1e24;
+    --color-texto-principal: #ffffff;
+    --color-texto-secundario: #a8a8b3;
+    --color-detalles: #9c27b0; /* Podés cambiar este por tu color de énfasis */
+    --color-borde: #29292e;
+    --color-rojo: #e04343;
+}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--color-fondo);
+            color: var(--color-texto-principal);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 1100px;
+            background-color: var(--color-tarjeta);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--color-borde);
+        }
+
+        /* Encabezado del Panel */
+        .encabezado {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--color-borde);
+            padding-bottom: 15px;
+        }
+
+        .encabezado h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .encabezado h1 span {
+            color: var(--color-detalles);
+        }
+
+        .btn-volver {
+            background-color: transparent;
+            color: var(--color-texto-secundario);
+            border: 1px solid var(--color-borde);
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-volver:hover {
+            background-color: var(--color-borde);
+            color: var(--color-texto-principal);
+        }
+
+        /* Tabla de Usuarios */
+        .tabla-contenedor {
+            overflow-x: auto; /* Hace que sea responsivo si se ve en celus */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid var(--color-borde);
+        }
+
+        th {
+            background-color: rgba(0, 0, 0, 0.15);
+            color: var(--color-detalles);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            color: var(--color-texto-secundario);
+            font-size: 15px;
+        }
+
+        tr:hover td {
+            color: var(--color-texto-principal);
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* IDs o textos destacados */
+        .user-id {
+            font-family: monospace;
+            color: var(--color-texto-principal);
+            font-weight: bold;
+        }
+
+        .user-nombre {
+            color: var(--color-texto-principal);
+            font-weight: 500;
+        }
+
+        /* Etiquetas de Rol (Admin / Cliente) */
+        .rol {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .rol.admin {
+            background-color: rgba(0, 173, 181, 0.2);
+            color: var(--color-detalles);
+        }
+
+        .rol.cliente {
+            background-color: rgba(168, 168, 179, 0.15);
+            color: var(--color-texto-secundario);
+        }
+
+        /* Botones de acción */
+        .acciones {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-accion {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-editar {
+            background-color: var(--color-borde);
+            color: var(--color-texto-principal);
+        }
+
+        .btn-editar:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-eliminar {
+            background-color: rgba(224, 67, 67, 0.15);
+            color: var(--color-rojo);
+        }
+
+        .btn-eliminar:hover {
+            background-color: var(--color-rojo);
+            color: white;
+        }
