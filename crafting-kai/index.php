@@ -24,7 +24,7 @@ $Productos = $conn->obtenerTodos();
             <a href="info.php" class="user-profile">
                 <?php if (isset($_SESSION['id'])) { ?>
                     <div class="user-avatar">
-                        <img src="img/foto de ivan.jpg" alt="Avatar de Usuario">
+                        <img src="https://cdn-icons-png.flaticon.com/128/310/310818.png" alt="Avatar de Usuario">
                     </div>
                     <div class="user-info">
                         <span class="user-name" >
@@ -60,7 +60,7 @@ $Productos = $conn->obtenerTodos();
                 <?php if (isset($_SESSION['id'])) { ?>
                     <a href="logout.php" class="btn-action"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                     <a href="Carrito.php" class="btn-action cart-btn"><i class="fas fa-shopping-cart"></i> Carrito <span class="cart-count">0</span></a>
-                <?php if ($_SESSION['rol'] == 2) { ?>
+                <?php if ($_SESSION['rol'] == 3) { ?>
                     <a href="admin.php" class="btn-action"><i class="fas fa-user-shield"></i> Panel Admin</a>
                 <?php } ?>
                 <?php } else { ?>
@@ -97,8 +97,14 @@ $Productos = $conn->obtenerTodos();
                         <h3><?php echo $producto->getNombre(); ?></h3>
                         <p class="product-description"><?php echo $producto->getDescripcion(); ?></p>
                         <div class="product-meta">
-                            <span class="product-price"><?php echo $producto->getPrecio(); ?></span>
-                            <button class="btn-add-cart"><i class="fas fa-cart-plus"></i></button>
+                            <span class="product-price"><?php echo $producto->getPrecio(); ?> -- Stock: <?php echo $producto->getStock(); ?></span>
+                            <?php if ($producto->getStock() <= 0) { ?>
+                                <span class="out-of-stock">Agotado</span>
+                            <?php } ?>
+                            <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3) { ?>
+                                <a class="btn-add-cart" href="incrementarstock.php?id=<?php echo $producto->getid(); ?>"><i class="fa-solid fa-plus"></i></a>
+                            <?php } ?>
+                            <a class="btn-add-cart" href="agregarProducto.php?id=<?php echo $producto->getid(); ?>"><i class="fas fa-cart-plus"></i></a>
                         </div>
                     </div>
                 </div>

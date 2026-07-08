@@ -6,13 +6,14 @@ $conn->set_charset("utf8mb4");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dao = new UsuarioDAO($conn);
+    $carritoDAO = new CarritoDAO($conn);
     $Usuario = $dao->login($_POST['email'], $_POST['password']);
     if ($Usuario) {
         $_SESSION['id']   = $Usuario->getId();
         $_SESSION['user'] = $Usuario->getNombre();
         $_SESSION['rol']  = $Usuario->getRol();
         $_SESSION['mail'] = $Usuario->getEmail(); // Guardamos el email en sesión para futuras referencias
-
+        $_SESSION['carrito'] = $carritoDAO->obtenerCarritoPorId($Usuario->getId());
         header("Location: index.php?login=success");
         exit();
     } else {

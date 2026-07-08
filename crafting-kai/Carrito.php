@@ -5,6 +5,10 @@ if (!isset($_SESSION['id'])) {
     header('Location: index.php');
     exit();
 }
+$carritoDAO = new CarritoDAO($conn);
+$detalles = $carritoDAO->obtenerDetalleCarrito($_SESSION['carrito']);
+$productoDAO = new ProductoDAO($conn);
+$total = 0;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -42,7 +46,34 @@ if (!isset($_SESSION['id'])) {
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody id="carrito-body"></tbody>
+                    <tbody id="carrito-body">
+                        <?php 
+                        if (empty($detalles)) {?>
+                            <tr><td colspan='3'>El carrito está vacío</td></tr>
+                        
+                        <?php  } else {
+                            
+                        foreach ($detalles as $detalle) {  
+                            $producto = $productoDAO->obtenerPorId($detalle->getIdProducto());
+                            // 2. Extraemos los datos del producto de forma segura
+                            $nombreProducto = htmlspecialchars($producto->getNombre());
+                            $precioUnitario = $producto->getPrecio(); // El precio viene del catálogo
+        
+                            // 3. Tomamos la cantidad real de la tabla detalle_carrito
+                            $cantidad = $detalle->getCantidad();
+        
+                            // 4. Calculamos el subtotal de esta fila
+                            $total = $total + $precioUnitario;
+                            ?>
+                            <tr>
+                                <td><?php echo $nombreProducto; ?> <?php echo $detalle->getIdProducto(); ?></td>
+                                <td><?php echo $precioUnitario; ?></td>
+                                <td><?php echo $cantidad; ?></td> 
+                                <td><?php echo $total; ?></td>
+                                <td><button class="btn-remove" ><a href="eliminar.php?id=<?php echo $detalle->getIdDetalle(); ?>"><i class="fas fa-trash"></i></a></button></td>
+                            </tr>
+                        <?php } } ?>
+                    </tbody>
                 
                 </table>
             </div>
@@ -52,7 +83,7 @@ if (!isset($_SESSION['id'])) {
             
                 <div class="summary-detail">
                     <span>Subtotal:</span>
-                    <span id="subtotal">$0</span>
+                    <span id="subtotal">$<?php echo $total; ?></span>
                 </div>
             
                 <div class="summary-detail">
@@ -64,7 +95,7 @@ if (!isset($_SESSION['id'])) {
             
                 <div class="summary-total">
                     <span>Total:</span>
-                    <span id="total">$0</span>
+                    <span id="total">$<?php echo $total; ?></span>
                 </div>
             
                 <button class="btn-checkout">

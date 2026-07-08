@@ -6,7 +6,38 @@ class UsuarioDAO {
     public function __construct($conexion) {
         $this->db = $conexion;
     }
-    // Método de autenticación (Aquí movemos tu lógica de login)
+
+    //
+    public function registrarUsuario($nombre, $email, $password, $id_tipo) {
+        // 1. Validamos si el correo ya está registrado
+        $stmt = $this->db->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            echo "<script>alert('El correo ya está registrado.'); window.location.href='registro.php';</script>";
+        } else {
+            // Insertar nuevo usuario
+            $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, email, password, id_tipo) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("sssi", $nombre, $email, $password, $id_tipo);
+
+        if ($stmt->execute()) {
+            $stmt = $this->db->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $fila = $resultado->fetch_assoc();
+            $id_usuario = $fila['id_usuario'];
+            $CarritoDAO = new CarritoDAO($this->db);
+            $CarritoDAO->crearCarrito($id_usuario);
+            echo "<script>alert('Registro exitoso. Ahora puedes iniciar sesión.'); window.location.href='login.php';</script>";
+        } else {
+            echo "<script>alert('Error al registrar. Inténtalo de nuevo.'); window.location.href='registro.php';</script>";
+        }
+    }
+    }
+    // Método de autenticación 
     public function login($email, $password) {
         // 1. Preparamos la consulta para evitar inyecciones SQL
         $stmt = $this->db->prepare("SELECT id_usuario, nombre, id_tipo, `password` FROM usuarios WHERE email = ?");
@@ -15,7 +46,7 @@ class UsuarioDAO {
         $resultado = $stmt->get_result();
 
         if ($fila = $resultado->fetch_assoc()) {
-            // 2. Verificamos la contraseña (asumiendo que usas password_hash)
+            // 2. Verificamos la contraseña 
             if (password_verify($password, $fila['password'])) {
                 // 3. Retornamos un objeto Usuario lleno con los datos
                 return new Usuario($fila['id_usuario'], $fila['nombre'], $email, $fila['id_tipo']);

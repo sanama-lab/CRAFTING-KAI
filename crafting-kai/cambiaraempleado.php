@@ -1,6 +1,6 @@
 <?php
 require_once 'config.php';
-if (!isset($_SESSION['id']) || $_SESSION['rol'] != 2) {
+if (!isset($_SESSION['id']) || $_SESSION['rol'] != 3) {
     header('Location: admin.php');
     exit();
 }

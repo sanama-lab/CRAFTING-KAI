@@ -1,6 +1,6 @@
 <?php
 require_once 'config.php';
-if (!isset($_SESSION['id']) && $_SESSION['id_tipo'] != 2) {
+if (!isset($_SESSION['id']) && $_SESSION['id_tipo'] != 3) {
     header('Location: index.php');
     exit();
 }
@@ -38,19 +38,19 @@ $resultado = $userDAO->obtenerTodoUsuarios();
                 <tbody>
                     <?php
                     // Código para obtener y mostrar los usuarios
-                    foreach ($resultado as $Usuario) {
+                    foreach ($resultado as $Usuario) { if ($Usuario->getRol() == '3') continue; // Saltar al siguiente usuario si es admin 
                     ?>
                     <tr>
                         <td class="user-id"><?php echo htmlspecialchars($Usuario->getId()); ?></td>
                         <td class="user-nombre"><?php echo htmlspecialchars($Usuario->getNombre()); ?></td>
                         <td><?php echo htmlspecialchars($Usuario->getEmail()); ?></td>
-                        <td><span <?php echo $Usuario->getRol() === '2' ? 'class="rol admin"' : 'class="rol cliente"'; ?>><?php echo htmlspecialchars($Usuario->getRol() === '2' ? 'Administrador' : 'Cliente'); ?></span></td>
+                        <td><span <?php echo $Usuario->getRol() === '2' ? 'class="rol admin"' : 'class="rol cliente"'; ?>><?php echo htmlspecialchars($Usuario->getRol() === '2' ? 'empleado' : 'Cliente'); ?></span></td>
                         <td class="acciones">
                             <?php if ($Usuario->getRol() === '2') {
                                 //llamar al metodo para cambiar el rol del usuario ?>
                                 <a class="btn-accion btn-editar " href="cambiarausuario.php?id=<?php echo $Usuario->getId(); ?>">hacer usuario</a>
                                 <?php } else {?>
-                                <a class="btn-accion btn-editar" href="cambiaraempleado.php?id=<?php echo $Usuario->getId(); ?>">hacer admin</a>
+                                <a class="btn-accion btn-editar" href="cambiaraempleado.php?id=<?php echo $Usuario->getId(); ?>">hacer empleado</a>
                             <?php } ?>
                             <a class="btn-accion btn-eliminar" href="eliminarUsuario.php?id=<?php echo $Usuario->getId(); ?>" data-id="<?php echo $Usuario->getId(); ?>">Eliminar</a>
                         </td>

@@ -16,6 +16,7 @@ class DetallePedido {
 
     // Getters
     public function getIdDetalle() { return $this->id_detalle_ped; }
+    public function getIdPedido() { return $this->id_pedido; }
     public function getIdProducto() { return $this->id_producto; }
     public function getCantidad() { return $this->cantidad; }
     public function getPrecioSnapshot() { return $this->precio_unitario_snapshot; }

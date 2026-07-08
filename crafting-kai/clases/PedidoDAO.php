@@ -20,6 +20,13 @@ class PedidoDAO {
             return false;
         }
     }
+    public function cancelarpedido($id_pedido) {
+        $sql = "DELETE FROM pedidos WHERE id_pedido = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $id_pedido);
+        return $stmt->execute();
+    }
+
     public function obtenerPedidosPorUsuario($id_usuario) {
         $sql = "SELECT id_pedido, fecha_pedido, total_venta FROM pedidos WHERE id_usuario = ?";
         $stmt = $this->db->prepare($sql);

@@ -32,7 +32,6 @@ class ProductoDAO {
         return $productos;
     }
 
-
     public function obtenerPorId($id) {
         $sql = "SELECT id_producto, nombre, descripcion, precio_actual, stock_disponible FROM productos WHERE id_producto = ?";
         
@@ -60,6 +59,36 @@ class ProductoDAO {
         }
         
         return null;
+    }
+    public function incrementarStock($id_producto) {
+        $sql = "UPDATE productos SET stock_disponible = stock_disponible + 1 WHERE id_producto = ?";
+        
+        $stmt = $this->conexion->prepare($sql);
+        
+        if ($stmt) {
+            // El parámetro "i" indica que el valor es un entero (Integer)
+            $stmt->bind_param("i", $id_producto);
+            $resultado = $stmt->execute();
+            $stmt->close();
+            return $resultado;
+        }
+        
+        return false;
+    }
+    public function decrementarStock($id_producto) {
+        $sql = "UPDATE productos SET stock_disponible = stock_disponible - 1 WHERE id_producto = ? AND stock_disponible > 0";
+        
+        $stmt = $this->conexion->prepare($sql);
+        
+        if ($stmt) {
+            // El parámetro "i" indica que el valor es un entero (Integer)
+            $stmt->bind_param("i", $id_producto);
+            $resultado = $stmt->execute();
+            $stmt->close();
+            return $resultado;
+        }
+        
+        return false;
     }
 }
 ?>
